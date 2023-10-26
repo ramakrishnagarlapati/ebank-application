@@ -1,0 +1,40 @@
+.home-container {
+  min-height: 100vh;
+  background-color: #152850;
+  display: flex;
+  flex-direction: column;
+}
+.nav-header {
+}
+.nav-content {
+  max-width: 1110px;
+  margin: 40px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logout-btn {
+  padding: 8px 20px;
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  border: 1px solid #fff;
+  color: #fff;
+  background-color: transparent;
+  transition: opacity 0.3s;
+}
+.logout-btn:hover {
+  opacity: 0.5;
+}
+.account-details {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.account-heading-tag {
+  color: #fff;
+  font-size: 65px;
+}
