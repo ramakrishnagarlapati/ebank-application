@@ -9,6 +9,15 @@ function Login(props) {
   const [pin, setPin] = useState('')
   const [showErrorMsg, setShowErrorMsg] = useState(false)
   const [errorMsgText, setErrorMsgText] = useState('')
+  const onSubmitSuccess = jwtToken => {
+    const {history} = props
+    Cookies.set('jwt_token', jwtToken, {expires: 30, path: '/'})
+    history.replace('/')
+  }
+  const onSubmitFailure = errMsg => {
+    setShowErrorMsg(true)
+    setErrorMsgText(errMsg)
+  }
   const onFormSubmit = async event => {
     event.preventDefault()
     const userDetails = {user_id: userId, pin}
@@ -20,14 +29,10 @@ function Login(props) {
       body: JSON.stringify(userDetails),
     })
     const data = await response.json()
-    if (response.ok) {
-      const {jwt_token: jwtToken} = data
-      Cookies.set('jwt_token', jwtToken, {expires: 7})
-      const {history} = props
-      history.replace('/')
+    if (response.ok === true) {
+      onSubmitSuccess(data.jwt_token)
     } else {
-      setErrorMsgText(data.error_msg)
-      setShowErrorMsg(true)
+      onSubmitFailure(data.error_msg)
     }
   }
   const jwtToken = Cookies.get('jwt_token')
@@ -76,8 +81,8 @@ function Login(props) {
             <button className="login-btn" type="submit">
               Login
             </button>
+            {showErrorMsg && <p className="error-message">{errorMsgText}</p>}
           </form>
-          {showErrorMsg && <p className="error-message">{errorMsgText}</p>}
         </div>
       </div>
     </div>
